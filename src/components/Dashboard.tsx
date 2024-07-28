@@ -3,11 +3,72 @@
 import { FC, useState } from 'react';
 import Sidebar from './SideBar';
 import { Search, Calendar, Zap, Filter, Share, Plus, HelpCircle } from 'lucide-react';
+import TaskBoard from './Taskboard';
 
 interface DashboardProps { }
 
+interface Task {
+    title: string;
+    description: string;
+    priority: 'Urgent' | 'Medium' | 'Low';
+    date: string;
+}
+
 const Dashboard: FC<DashboardProps> = () => {
     const [userName, setUserName] = useState<string>("Joe Gardner");
+    const boards: Array<{ title: string; tasks: Task[] }> = [
+        {
+            title: "To do",
+            tasks: [
+                {
+                    title: "Implement User Authentication",
+                    description: "Develop and integrate user authentication using email and password.",
+                    priority: "Urgent",
+                    date: "March 15, 2023"
+                }
+            ]
+        },
+        {
+            title: "In progress",
+            tasks: [
+                {
+                    title: "Design Home page UI",
+                    description: "Develop and integrate user authentication using email and password.",
+                    priority: "Urgent",
+                    date: "March 15, 2023"
+                },
+                {
+                    title: "Conduct User Feedback Survey",
+                    description: "Collect and analyze user feedback to improve app features.",
+                    priority: "Low",
+                    date: "March 15, 2023"
+                }
+            ]
+        },
+        {
+            title: "Under review",
+            tasks: [
+                {
+                    title: "Integrate Cloud Storage",
+                    description: "Enable cloud storage for note backup and synchronization.",
+                    priority: "Urgent",
+                    date: "March 15, 2023"
+                }
+            ]
+        },
+        {
+            title: "Finished",
+            tasks: [
+                {
+                    title: "Test Cross-browser Compatibility",
+                    description: "Ensure the app works seamlessly across different web browsers.",
+                    priority: "Medium",
+                    date: "March 15, 2023"
+                }
+            ]
+        },
+        // ... other boards
+    ];
 
     return (
         <div className="flex h-screen bg-[#F4F4F4]">
@@ -72,12 +133,10 @@ const Dashboard: FC<DashboardProps> = () => {
                 </div>
 
                 {/* Section 3: Bottom content */}
-                <div className="flex-grow p-6 overflow-auto bg-white mt-4 rounded-lg shadow">
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">Section 3 Content</h2>
-                    <p className="text-gray-600">
-                        This is where the content for section 3 will go. You can add as much content as needed here, and it will scroll independently of the top section.
-                    </p>
-                    {/* Add more content for section 3 here */}
+                <div className="grid grid-cols-4 gap-4">
+                    {boards.map((board, index) => (
+                        <TaskBoard key={index} title={board.title} tasks={board.tasks} />
+                    ))}
                 </div>
             </div>
         </div>
