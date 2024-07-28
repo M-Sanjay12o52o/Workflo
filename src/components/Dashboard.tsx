@@ -1,101 +1,87 @@
 "use client";
 
-import { FC, useState } from 'react'
-import Sidebar from './SideBar'
-import Image from 'next/image';
+import { FC, useState } from 'react';
+import Sidebar from './SideBar';
+import { Search, Calendar, Zap, Filter, Share, Plus, HelpCircle } from 'lucide-react';
 
-interface DashboardProps {
+interface DashboardProps { }
 
-}
-
-const Dashboard: FC<DashboardProps> = ({ }) => {
+const Dashboard: FC<DashboardProps> = () => {
     const [userName, setUserName] = useState<string>("Joe Gardner");
 
-    return <div className='flex flex-row bg-white border-r border-[#DEDEDE]'>
-        {/* section 1 */}
-        <div>
-            <Sidebar />
-        </div>
-        {/* section 2 */}
-        <div className='w-screen bg-[#F4F4F4] p-4'>
-            <div className='flex flex-row justify-between items-center'>
-                <h1 className='text-black font-bold text-3xl'>Good morning, {userName}</h1>
-                <p className='w-40 h-5 font-inter text-sm font-normal text-black flex-none order-0'>
-                    Help & feedback
-                    <img className='inline-block' src="/icons/help.svg" width={24} height={24} />
-                </p>
-            </div>
-            <div className='flex flex-row mb-4'>
-                <div className='flex flex-row bg-white mr-2 rounded-md'>
-                    <div className='flex items-center justify-center'>
-                        <img src="/icons/one.svg" width={40} height={40} />
-                    </div>
-                    <div>
-                        <h3
-                            className='text-gray-500 w-[245px] h-5 font-inter font-semibold flex-none order-0 self-stretch'
-                        >Introducing tags</h3>
-                        <p
-                            className='w-[244.67px] h-[51px] font-inter text-[14px] leading-relaxed text-gray-500 flex-none order-1 self-stretch'
-                        >Easily categorize and find your notes by adding tags. Keep your workspace clutter-free and efficient.</p>
-                    </div>
-                </div>
-                <div className='flex flex-row bg-white mr-2 rounded-md'>
-                    <div className='flex items-center justify-center'>
-                        <img src="/icons/two.svg" width={40} height={40} />
-                    </div>
-                    <div>
-                        <h3
-                            className='text-gray-500 w-[245px] h-5 font-inter font-semibold flex-none order-0 self-stretch'
-                        >Share Notes Instantly</h3>
-                        <p
-                            className='text-gray-500 w-[244.67px] h-[51px] font-inter text-[14px] leading-relaxed flex-none order-1 self-stretch'
-                        >Effortlessly share your notes with others via email or link. Enhance collaboration with quick sharing option</p>
-                    </div>
-                </div>
-                <div className='flex flex-row h-[100px] bg-white rounded-md'>
-                    <div className='flex items-center justify-center'>
-                        <img src="/icons/three.svg" width={40} height={40} />
-                    </div>
-                    <div>
-                        <h3
-                            className='text-gray-500 w-[245px] h-5 font-inter font-semibold flex-none order-0 self-stretch'
-                        >Access Anywhere</h3>
-                        <p
-                            className='text-gray-500 w-[244.67px] h-[51px] font-inter text-[14px] leading-relaxed flex-none order-1 self-stretch'
-                        >Sync your notes across all devices. Stay productive whether you are on your phone, tablet, or computer.</p>
-                    </div>
-                </div>
+    return (
+        <div className="flex h-screen bg-[#F4F4F4]">
+            {/* Section 1: Sidebar */}
+            <div className="flex-shrink-0">
+                <Sidebar />
             </div>
 
-            <div className='flex flex-row'>
-                <input type="text" placeholder='Search' />
-                <img src="/icons/searchicon.svg" width={24} height={24} />
-                <p>
-                    Calender view
-                    <img src="/icons/calender.svg" width={24} height={24} />
-                </p>
-                <p>
-                    Automation
-                    <img src="/icons/automation.svg" width={24} height={24} />
-                </p>
-                <p>
-                    Filter
-                    <img src="/icons/filter.svg" width={24} height={24} />
-                </p>
-                <p>
-                    Share
-                    <img src="/icons/share.svg" width={24} height={24} />
-                </p>
-                <button className='p-2 gap-2 h-[40px] w-[136px] full bg-gradient-to-b from-[#4C38C2] to-[#2F2188] text-white rounded-lg shadow-md'>Create new
-                    <img className='inline-block' src="/icons/plus.svg" width={24} height={24} />
-                </button>
+            {/* Main content area */}
+            <div className="flex flex-col flex-grow overflow-hidden">
+                {/* Section 2: Top content */}
+                <div className="p-6 bg-white shadow-sm">
+                    <div className="flex justify-between items-center mb-6 bg-[#F4F4F4]">
+                        <h1 className="text-3xl font-bold text-gray-800">Good morning, {userName}</h1>
+                        <button className="flex items-center text-sm text-gray-600 hover:text-gray-800">
+                            Help & feedback
+                            <HelpCircle className="ml-2" size={20} />
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                        {[
+                            { icon: "/icons/one.svg", title: "Introducing tags", description: "Easily categorize and find your notes by adding tags. Keep your workspace clutter-free and efficient." },
+                            { icon: "/icons/two.svg", title: "Share Notes Instantly", description: "Effortlessly share your notes with others via email or link. Enhance collaboration with quick sharing options." },
+                            { icon: "/icons/three.svg", title: "Access Anywhere", description: "Sync your notes across all devices. Stay productive whether you are on your phone, tablet, or computer." }
+                        ].map((item, index) => (
+                            <div key={index} className="flex items-start p-4 bg-white rounded-lg shadow">
+                                <img src={item.icon} alt="" className="w-10 h-10 mr-4" />
+                                <div>
+                                    <h3 className="font-semibold text-gray-700 mb-1">{item.title}</h3>
+                                    <p className="text-sm text-gray-500 leading-relaxed">{item.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex items-center space-x-4">
+                        <div className="relative flex-grow">
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                        </div>
+                        {[
+                            { icon: Calendar, text: "Calendar view" },
+                            { icon: Zap, text: "Automation" },
+                            { icon: Filter, text: "Filter" },
+                            { icon: Share, text: "Share" }
+                        ].map((item, index) => (
+                            <button key={index} className="flex items-center text-sm text-gray-600 hover:text-gray-800">
+                                {item.text}
+                                <item.icon className="ml-2" size={20} />
+                            </button>
+                        ))}
+                        <button className="flex items-center px-4 py-2 bg-gradient-to-b from-[#4C38C2] to-[#2F2188] text-white rounded-lg shadow-md hover:from-[#5A45D1] hover:to-[#3A2A9E]">
+                            Create new
+                            <Plus className="ml-2" size={20} />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Section 3: Bottom content */}
+                <div className="flex-grow p-6 overflow-auto bg-white mt-4 rounded-lg shadow">
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">Section 3 Content</h2>
+                    <p className="text-gray-600">
+                        This is where the content for section 3 will go. You can add as much content as needed here, and it will scroll independently of the top section.
+                    </p>
+                    {/* Add more content for section 3 here */}
+                </div>
             </div>
         </div>
-        {/* // section 2 */}
-        <div className='bg-green-700'>
-            <h1>section 3</h1>
-        </div>
-    </div>
-}
+    );
+};
 
-export default Dashboard
+export default Dashboard;
