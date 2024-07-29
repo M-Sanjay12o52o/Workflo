@@ -114,6 +114,7 @@ const Taskmodal: FC<TaskmodalProps> = ({ onClose }) => {
                                     onChange={handleChangeStatus}
                                     className="bg-transparent outline-none w-full text-black"
                                 >
+                                    <option value="">-- Select status --</option>
                                     {statusOptions.map((status) => (
                                         <option key={status.value} value={status.value}>
                                             {status.label}
@@ -128,6 +129,7 @@ const Taskmodal: FC<TaskmodalProps> = ({ onClose }) => {
                                     onChange={handleChangePriority}
                                     className="bg-transparent outline-none w-full text-black"
                                 >
+                                    <option value="">-- Select priority --</option>
                                     {priorityOptions.map((option) => (
                                         <option key={option.value} value={option.value}>
                                             {option.label}
@@ -136,6 +138,7 @@ const Taskmodal: FC<TaskmodalProps> = ({ onClose }) => {
                                 </select>
                             </div>
                             <div className="flex items-center space-x-2 bg-gray-100 p-2 rounded">
+                                <Calendar size={18} className="text-gray-500" />
                                 <DatePicker
                                     selected={deadline}
                                     onChange={(date: Date | null) => setDeadline(date)}
@@ -146,22 +149,6 @@ const Taskmodal: FC<TaskmodalProps> = ({ onClose }) => {
                                     placeholder='Due Date'
                                     value={deadline ? deadline.toLocaleDateString() : ''}
                                     readOnly
-                                    className="bg-transparent outline-none w-full text-black"
-                                />
-                                {/* <Calendar size={18} className="text-gray-500" />
-                                <input
-                                    type="text"
-                                    placeholder="Due Date"
-                                    value={deadline}
-                                    onChange={(e) => setDeadline(e.target.value)}
-                                    className="bg-transparent outline-none w-full text-black"
-                                /> */}
-                            </div>
-                            <div className="flex items-center space-x-2 bg-gray-100 p-2 rounded">
-                                <Tag size={18} className="text-gray-500" />
-                                <input
-                                    type="text"
-                                    placeholder="Tags"
                                     className="bg-transparent outline-none w-full text-black"
                                 />
                             </div>

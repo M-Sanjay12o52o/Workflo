@@ -5,20 +5,9 @@ import Sidebar from './SideBar';
 import { Search, Calendar, Zap, Filter, Share, Plus, HelpCircle } from 'lucide-react';
 import TaskBoard from './Taskboard';
 import { useRouter } from 'next/navigation';
+import { Card } from './ui/card';
 
 interface DashboardProps { }
-
-interface Task {
-    title: string;
-    description: string;
-    status: string;
-    priority: 'Urgent' | 'Medium' | 'Low';
-    date: string;
-}
-
-interface Tasks extends Task {
-    id: string;
-}
 
 const Dashboard: FC<DashboardProps> = () => {
     const [tasks, setTasks] = useState<Tasks[]>([]);
@@ -69,7 +58,7 @@ const Dashboard: FC<DashboardProps> = () => {
             <div className="flex flex-col flex-grow overflow-hidden">
                 {/* Section 2: Top content */}
                 <div className="p-6 bg-white shadow-sm">
-                    <div className="flex justify-between items-center mb-6 bg-[#F4F4F4]">
+                    <div className="flex justify-between items-center mb-6">
                         <h1 className="text-3xl font-bold text-gray-800">Good morning, {userName}</h1>
                         <button className="flex items-center text-sm text-gray-600 hover:text-gray-800">
                             Help & feedback
@@ -125,11 +114,16 @@ const Dashboard: FC<DashboardProps> = () => {
                 {/* Section 3: Bottom content */}
                 <div className="grid grid-cols-4 gap-4">
                     {boards.map((board, index) => (
-                        <TaskBoard key={index} title={board.title} tasks={board.tasks} />
+                        <TaskBoard
+                            key={index}
+                            boardTitle={board.title}
+                            tasks={board.tasks}
+                            setTasks={setTasks}
+                        />
                     ))}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
