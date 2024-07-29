@@ -12,7 +12,7 @@ const page: FC<pageProps> = ({ }) => {
     const router = useRouter();
 
     const handleClose = () => {
-        router.back()
+        router.push('/dashboard');
     }
 
     return <div>

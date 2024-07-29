@@ -11,12 +11,33 @@ interface TaskmodalProps {
 
 const Taskmodal: FC<TaskmodalProps> = ({ onClose }) => {
     const [title, setTitle] = useState('');
-    const [status, setStatus] = useState('');
-    const [priority, setPriority] = useState('');
+    const [status, setStatus] = useState<"To do" | "In progress" | "Under review" | "Finished" | undefined>(undefined);
+    const [priority, setPriority] = useState<"Low" | "Medium" | "Urgent" | undefined>(undefined);
     const [deadline, setDeadline] = useState<Date | null>(null);
     const [description, setDescription] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
+
+    const statusOptions = [
+        { value: 'To do', label: 'To do' },
+        { value: 'In progress', label: 'In progress' },
+        { value: 'Under review', label: 'Under review' },
+        { value: 'Finished', label: 'Finished' },
+    ];
+
+    const handleChangeStatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setStatus(event.target.value as 'To do' | 'In progress' | 'Under review' | 'Finished');
+    };
+
+    const priorityOptions = [
+        { value: 'Low', label: 'Low' },
+        { value: 'Medium', label: 'Medium' },
+        { value: 'Urgent', label: 'Urgent' },
+    ];
+
+    const handleChangePriority = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setPriority(event.target.value as 'Low' | 'Medium' | 'Urgent');
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -33,7 +54,7 @@ const Taskmodal: FC<TaskmodalProps> = ({ onClose }) => {
                     title,
                     description,
                     status,
-                    priority: parseInt(priority) || undefined,
+                    priority,
                     deadline: deadline ? new Date(deadline) : undefined,
                 }),
             });
@@ -88,23 +109,31 @@ const Taskmodal: FC<TaskmodalProps> = ({ onClose }) => {
                         <div className="grid grid-cols-2 gap-4">
                             <div className="flex items-center space-x-2 bg-gray-100 p-2 rounded">
                                 <CheckCircle size={18} className="text-gray-500" />
-                                <input
-                                    type="text"
-                                    placeholder="Status"
+                                <select
                                     value={status}
-                                    onChange={(e) => setStatus(e.target.value)}
+                                    onChange={handleChangeStatus}
                                     className="bg-transparent outline-none w-full text-black"
-                                />
+                                >
+                                    {statusOptions.map((status) => (
+                                        <option key={status.value} value={status.value}>
+                                            {status.label}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="flex items-center space-x-2 bg-gray-100 p-2 rounded">
                                 <Flag size={18} className="text-gray-500" />
-                                <input
-                                    type="text"
-                                    placeholder="Priority"
+                                <select
                                     value={priority}
-                                    onChange={(e) => setPriority(e.target.value)}
+                                    onChange={handleChangePriority}
                                     className="bg-transparent outline-none w-full text-black"
-                                />
+                                >
+                                    {priorityOptions.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="flex items-center space-x-2 bg-gray-100 p-2 rounded">
                                 <DatePicker

@@ -11,66 +11,26 @@ interface DashboardProps { }
 interface Task {
     title: string;
     description: string;
+    status: string;
     priority: 'Urgent' | 'Medium' | 'Low';
     date: string;
 }
 
+interface Tasks extends Task {
+    id: string;
+}
+
 const Dashboard: FC<DashboardProps> = () => {
+    const [tasks, setTasks] = useState<Tasks[]>([]);
     const router = useRouter();
     const [userName, setUserName] = useState<string>("Joe Gardner");
-    const boards: Array<{ title: string; tasks: Task[] }> = [
-        {
-            title: "To do",
-            tasks: [
-                {
-                    title: "Implement User Authentication",
-                    description: "Develop and integrate user authentication using email and password.",
-                    priority: "Urgent",
-                    date: "March 15, 2023"
-                }
-            ]
-        },
-        {
-            title: "In progress",
-            tasks: [
-                {
-                    title: "Design Home page UI",
-                    description: "Develop and integrate user authentication using email and password.",
-                    priority: "Urgent",
-                    date: "March 15, 2023"
-                },
-                {
-                    title: "Conduct User Feedback Survey",
-                    description: "Collect and analyze user feedback to improve app features.",
-                    priority: "Low",
-                    date: "March 15, 2023"
-                }
-            ]
-        },
-        {
-            title: "Under review",
-            tasks: [
-                {
-                    title: "Integrate Cloud Storage",
-                    description: "Enable cloud storage for note backup and synchronization.",
-                    priority: "Urgent",
-                    date: "March 15, 2023"
-                }
-            ]
-        },
-        {
-            title: "Finished",
-            tasks: [
-                {
-                    title: "Test Cross-browser Compatibility",
-                    description: "Ensure the app works seamlessly across different web browsers.",
-                    priority: "Medium",
-                    date: "March 15, 2023"
-                }
-            ]
-        },
-        // ... other boards
-    ];
+
+    const boards = [
+        { title: 'To do', tasks: tasks.filter((task) => task.status === 'To do') },
+        { title: 'In progress', tasks: tasks.filter((task) => task.status === 'In progress') },
+        { title: 'Under review', tasks: tasks.filter((task) => task.status === 'Under review') },
+        { title: 'Finished', tasks: tasks.filter((task) => task.status === 'Finished') },
+    ]
 
     useEffect(() => {
         fetchTasks();
@@ -85,6 +45,9 @@ const Dashboard: FC<DashboardProps> = () => {
             }
 
             const data = await response.json();
+
+            setTasks(data);
+
             console.log('fetchTasks', data);
             return data;
         } catch (error) {
@@ -92,6 +55,8 @@ const Dashboard: FC<DashboardProps> = () => {
             throw error;
         }
     }
+
+
 
     return (
         <div className="flex h-screen bg-[#F4F4F4]">
