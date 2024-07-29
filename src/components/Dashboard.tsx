@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import Sidebar from './SideBar';
 import { Search, Calendar, Zap, Filter, Share, Plus, HelpCircle } from 'lucide-react';
 import TaskBoard from './Taskboard';
+import { useRouter } from 'next/navigation';
 
 interface DashboardProps { }
 
@@ -15,6 +16,7 @@ interface Task {
 }
 
 const Dashboard: FC<DashboardProps> = () => {
+    const router = useRouter();
     const [userName, setUserName] = useState<string>("Joe Gardner");
     const boards: Array<{ title: string; tasks: Task[] }> = [
         {
@@ -125,7 +127,9 @@ const Dashboard: FC<DashboardProps> = () => {
                                 <item.icon className="ml-2" size={20} />
                             </button>
                         ))}
-                        <button className="flex items-center px-4 py-2 bg-gradient-to-b from-[#4C38C2] to-[#2F2188] text-white rounded-lg shadow-md hover:from-[#5A45D1] hover:to-[#3A2A9E]">
+                        <button className="flex items-center px-4 py-2 bg-gradient-to-b from-[#4C38C2] to-[#2F2188] text-white rounded-lg shadow-md hover:from-[#5A45D1] hover:to-[#3A2A9E]"
+                            onClick={() => router.push('/assign')}
+                        >
                             Create new
                             <Plus className="ml-2" size={20} />
                         </button>
