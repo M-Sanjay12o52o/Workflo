@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Sidebar from './SideBar';
 import { Search, Calendar, Zap, Filter, Share, Plus, HelpCircle } from 'lucide-react';
 import TaskBoard from './Taskboard';
@@ -71,6 +71,27 @@ const Dashboard: FC<DashboardProps> = () => {
         },
         // ... other boards
     ];
+
+    useEffect(() => {
+        fetchTasks();
+    }, []);
+
+    const fetchTasks = async () => {
+        try {
+            const response = await fetch('/api/getTasks');
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log('fetchTasks', data);
+            return data;
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+            throw error;
+        }
+    }
 
     return (
         <div className="flex h-screen bg-[#F4F4F4]">
